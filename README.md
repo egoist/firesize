@@ -8,12 +8,17 @@ GET `https://firesize.pixelcat.co`
 
 Query:
 
-|Name|Required|Description|
-|---|---|---|
-|url|√|image url|
-|origin|×|output origin image|
-|width|×|resize to given width|
-|height|×|resize to given height|
+|Name|Type|Required|Description|
+|---|---|---|---|
+|url|string|√|image url|
+|origin|boolean|×|output origin image|
+|width|number|×|resize to given width|
+|height|number|×|resize to given height|
+
+## Example
+
+JPEG resize: https://firesize.pixelcat.co/?url=http://ww4.sinaimg.cn/large/a15b4afegw1f397cnma1xj21gy13mgvd&width=200<br>
+Original GIF Proxy: https://firesize.pixelcat.co/?url=http://i.giphy.com/UNpeAPM67tZMA.gif&origin=1
 
 ## Warning
 
