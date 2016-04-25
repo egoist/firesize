@@ -19,29 +19,39 @@ function getImage(cb) {
 
   const width = this.query.width && parseInt(this.query.width)
   const height = this.query.height && parseInt(this.query.height)
-  const transform = sharp()
-    .resize(width, height)
-    [imageType]()
-    .toBuffer((err, buf, info) => {
+  const transform = function () {
+    return toBuffer(sharp().resize(width, height)[imageType]())
+  }
+  function toBuffer(fn) {
+    return fn.toBuffer((err, buf, info) => {
       if (err) {
         return cb(err)
       }
       cb(null, {buf, contentType})
     })
+  }
 
-  request(url)
+  const req = request(url)
     .on('response', function(response) {
       contentType = response.headers['content-type']
       imageType = contentType.substr(contentType.indexOf('/') + 1)
     })
-    .pipe(transform)
+  if (this.query.origin) {
+    cb(null, req)
+  } else {
+    req.pipe(transform())
+  }
 }
 
 router.get('/', function* () {
   try {
     const ret = yield getImage
-    this.type = ret.contentType
-    this.body = ret.buf
+    if (ret.buf) {
+      this.type = ret.contentType
+      this.body = ret.buf
+    } else {
+      this.body = ret
+    }
   } catch (e) {
     this.body = {
       error: e.message
