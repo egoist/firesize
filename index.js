@@ -4,9 +4,13 @@ const Router = require('koa-router')
 const im = require('imagemagick')
 const request = require('request')
 const sharp = require('sharp')
+const Stream = require('stream')
+const onerror = require('koa-onerror')
 
 const app = koa()
 const router = new Router()
+
+onerror(app, {accepts() {return 'json'}})
 
 function getImage(cb) {
   const url = this.query.url
@@ -32,10 +36,12 @@ function getImage(cb) {
   }
 
   const req = request(url)
-    .on('response', function(response) {
+    .on('response', response => {
       contentType = response.headers['content-type']
       imageType = contentType.substr(contentType.indexOf('/') + 1)
     })
+    .on('error', err => cb(err))
+
   if (this.query.origin) {
     cb(null, req)
   } else {
@@ -45,12 +51,12 @@ function getImage(cb) {
 
 router.get('/', function* () {
   try {
-    const ret = yield getImage
-    if (ret.buf) {
+    let ret = yield getImage
+    if (ret instanceof Stream) {
+      this.body = ret
+    } else {
       this.type = ret.contentType
       this.body = ret.buf
-    } else {
-      this.body = ret
     }
   } catch (e) {
     this.body = {
