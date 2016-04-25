@@ -49,18 +49,12 @@ function getImage(cb) {
 }
 
 router.get('/', function* () {
-  try {
-    let ret = yield getImage
-    if (ret instanceof Stream) {
-      this.body = ret
-    } else {
-      this.type = ret.contentType
-      this.body = ret.buf
-    }
-  } catch (e) {
-    this.body = {
-      error: e.message
-    }
+  const ret = yield getImage
+  if (ret instanceof Stream) {
+    this.body = ret
+  } else {
+    this.type = ret.contentType
+    this.body = ret.buf
   }
 })
 
