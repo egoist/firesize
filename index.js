@@ -1,7 +1,6 @@
 'use strict'
 const koa = require('koa')
 const Router = require('koa-router')
-const im = require('imagemagick')
 const request = require('request')
 const sharp = require('sharp')
 const Stream = require('stream')
