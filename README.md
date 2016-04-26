@@ -18,7 +18,8 @@ Query:
 ## Example
 
 JPEG resize: https://firesize.pixelcat.co/?url=http://ww4.sinaimg.cn/large/a15b4afegw1f397cnma1xj21gy13mgvd&width=200<br>
-Original GIF Proxy: https://firesize.pixelcat.co/?url=http://i.giphy.com/UNpeAPM67tZMA.gif&origin=1
+Original GIF Proxy: https://firesize.pixelcat.co/?url=http://i.giphy.com/UNpeAPM67tZMA.gif&origin=1<br>
+Behind the Wall (NSFW): https://firesize.pixelcat.co/?url=https://pbs.twimg.com/media/Cg7xFYNUkAA0UtI.jpg
 
 ## Warning
 
